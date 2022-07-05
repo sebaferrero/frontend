@@ -199,6 +199,7 @@ export class CartService {
       data.numInCart--;
       if (data.numInCart < 1) {
         // TODO DELETE THE PRODUCT FROM CART
+        this.DeleteProductFromCart(index);
         this.cartData$.next({ ...this.cartDataServer });
       } else {
         this.cartData$.next({ ...this.cartDataServer });
@@ -254,12 +255,14 @@ export class CartService {
   }
 
   CheckoutFromCart(userId: number) {
-    this.http.post(`${this.serverURL}/order/payment`, null).subscribe((res) => {
+    this.http.post(`${this.serverURL}/orders/payment/`, null).subscribe((res) => {
+      console.log(res);
       //aca lo hice distinto (recibe un boolean)
       if (res) {
         this.resetServerData();
+        console.log(this.cartDataClient.prodData);
         this.http
-          .post<OrderResponse>(`${this.serverURL}/orders/new`, {
+          .post<OrderResponse>(`${this.serverURL}/orders/new/`, {
             userId: userId,
             products: this.cartDataClient.prodData,
           })

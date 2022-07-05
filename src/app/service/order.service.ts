@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,8 +14,8 @@ export class OrderService {
   constructor(private http:HttpClient) {
   }
 
-  getSingleOrder(orderId: number){
-    return this.http.get<ProductResponseModel[]>(this.serverUrl+'/orders'+orderId).toPromise()
+  getSingleOrder(orderId: number):Promise<ProductResponseModel[]>{
+    return lastValueFrom(this.http.get<ProductResponseModel[]>(this.serverUrl+'/orders/'+orderId));
   }
 
 }

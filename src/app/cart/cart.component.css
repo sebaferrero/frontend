@@ -1,0 +1,24 @@
+#number {
+    width: 32px;
+    height: 19px;
+    margin: 0px 10px;
+    padding: auto;
+    text-align: center;
+    border-top: 2px solid #dee0ee;
+    border-bottom: 2px solid #dee0ee;
+    border-left: 1px solid #dee0ee;
+    border-right: 2px solid #dee0ee;
+    background: #fff;
+    color: #8184a1;
+  }
+
+  .value-button{
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+
+  .value-button:hover{
+    cursor: pointer;
+    opacity: 0.5;
+  }
