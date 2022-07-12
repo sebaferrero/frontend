@@ -14,9 +14,12 @@ export class OrderService {
   constructor(private http:HttpClient) {
   }
 
-  getSingleOrder(orderId: number):Promise<ProductResponseModel[]>{
+  getSingleOrder(orderId:number):Promise<ProductResponseModel[]>{
     return lastValueFrom(this.http.get<ProductResponseModel[]>(this.serverUrl+'/orders/'+orderId));
   }
+  // getSingleOrder(orderId: number):Promise<ProductResponseModel[]>{
+  //   return lastValueFrom(this.http.get<ProductResponseModel[]>(this.serverUrl+'/orders/'+orderId));
+  // }
 
 }
 

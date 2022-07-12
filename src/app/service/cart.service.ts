@@ -42,6 +42,7 @@ export class CartService {
   cartTotal$ = new BehaviorSubject<number>(0);
   cartData$ = new BehaviorSubject<CartModelServer>(this.cartDataServer);
   producto:any
+  prods:any = [];
   constructor(
     private http: HttpClient,
     private productService: ProductsService,
@@ -94,7 +95,6 @@ export class CartService {
       this.producto = prod;
       // 1.If the cart is empty
       if (this.cartDataServer.data[0].product === undefined) {
-        console.log('aca');
         this.cartDataServer.data[0].product = this.producto['prod'];
         this.cartDataServer.data[0].numInCart =
           quantity != undefined ? quantity : 1;
@@ -104,7 +104,6 @@ export class CartService {
           this.cartDataServer.data[0].numInCart;
         this.cartDataClient.prodData[0].id = this.producto['prod']['id'];
         this.cartDataClient.total = this.cartDataServer.total;
-        console.log(this.cartDataClient);
         this.CalculateTotal();
         this.cartDataClient.total = this.cartDataServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
@@ -123,7 +122,7 @@ export class CartService {
         ); // -1 or a positive value
         // a. If that item is already in the cart => index is positive value
         if (index != -1) {
-          if (quantity != undefined && quantity <= prod.quantity) {
+          if (quantity != undefined && quantity <= this.producto['prod']['quantity']) {
             this.cartDataServer.data[index].numInCart =
               this.cartDataServer.data[index].numInCart < this.producto['prod']['quantity']
                 ? quantity
@@ -154,12 +153,12 @@ export class CartService {
         else {
           // b. If that item is not in the cart
           this.cartDataServer.data.push({
-            numInCart: 1,
+            numInCart: quantity != undefined && quantity <= this.producto['prod']['quantity'] ? quantity : 1,
             product: this.producto['prod'],
           });
 
           this.cartDataClient.prodData.push({
-            incart: 1,
+            incart: quantity != undefined && quantity <= this.producto['prod']['quantity'] ? quantity : 1,
             id: this.producto['prod']['id'],
           });
           this.CalculateTotal();
@@ -247,7 +246,6 @@ export class CartService {
       const { numInCart } = p;
       const { price } = p.product!;
       Total += numInCart * price;
-      console.log(numInCart);
     });
 
     this.cartDataServer.total = Total;
@@ -256,23 +254,23 @@ export class CartService {
 
   CheckoutFromCart(userId: number) {
     this.http.post(`${this.serverURL}/orders/payment/`, null).subscribe((res) => {
-      console.log(res);
       //aca lo hice distinto (recibe un boolean)
       if (res) {
         this.resetServerData();
-        console.log(this.cartDataClient.prodData);
         this.http
           .post<OrderResponse>(`${this.serverURL}/orders/new/`, {
             userId: userId,
             products: this.cartDataClient.prodData,
           })
           .subscribe((data: OrderResponse) => {
-            this.orderService.getSingleOrder(data.order_id).then((prods) => {
+            this.orderService.getSingleOrder(data.order_id).then((productos) => {
+              this.prods = productos;
+              console.log(this.prods);
               if (data.success) {
                 const navigationExtras: NavigationExtras = {
                   state: {
                     message: data.message,
-                    products: prods,
+                    products: this.prods,
                     orderId: data.order_id,
                     total: this.cartDataClient.total,
                   },

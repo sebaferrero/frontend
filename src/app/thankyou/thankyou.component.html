@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="jumbotron text-center">
+            <h1 class="display-3">
+                ¡Muchas gracias!
+            </h1>
+            <p class="lead"><strong>Por favor verifique su email</strong> Recibirá la confirmación de compra.</p>
+            <hr>
+            <p>
+                ID COMPRA: <strong>{{orderId}}</strong>
+            </p>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of products['orders']">
+                    <td class="align-items-center">
+                        <img [src]="p.image" alt="{{p.name}}" class="img-thumbnail" width="80px" height="80px">
+                    </td>
+                    <td class="align-items-center">{{p.name}}</td>
+                    <td class="align-items-center">{{p.price | currency: 'ARS'}}</td>
+                    <td class="align-items-center text-center">{{p.quantityOrdered}}</td>
+                </tr>
+                <tr class="border-0">
+                    <td style="border:none"></td>
+                    <td></td>
+                    <td class="font-weight-bold">TOTAL</td>
+                    <td class="text-success font-weight-bold">{{cartTotal | currency:'ARS'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

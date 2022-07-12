@@ -13,6 +13,15 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { CartComponent } from './cart/cart.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { ThankyouComponent } from './thankyou/thankyou.component';
+import { LoginComponent } from './login/login.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig
+} from 'angularx-social-login';
+import { GoogleLoginProvider  } from 'angularx-social-login';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +32,8 @@ import { ToastrModule } from 'ngx-toastr';
     ProductComponent,
     CheckoutComponent,
     CartComponent,
+    ThankyouComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -31,10 +42,27 @@ import { ToastrModule } from 'ngx-toastr';
     NoopAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SocialLoginModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('Google-Client-ID-Goes-here')
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
