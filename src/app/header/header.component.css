@@ -1,0 +1,40 @@
+#responsive-nav ul li  {
+    float: left;
+    position: relative;
+}
+#responsive-nav .categories a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    width: 100px;
+    line-height: 40px;
+    text-align: center;
+}
+#responsive-nav .categories a:hover {
+    color: #fff;
+    background: #666;
+}
+#responsive-nav ul li ul {
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 40px;
+    display: none;
+}
+#responsive-nav ul li:hover>ul {
+    display: block;
+}
+#responsive-nav ul li ul li {
+    float : none;
+    background: #eee;
+    margin-top: 2px;
+}
+#responsive-nav ul li ul li ul {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    display: none;
+}
+#responsive-nav ul li ul li:hover>ul {
+    display: block;
+}

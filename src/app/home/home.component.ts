@@ -13,6 +13,24 @@ export class HomeComponent implements OnInit {
 
   products: ProductModelServer[] = [];
 
+  categories:any= [
+    {
+      nombre: 'Tecnología'
+    },
+    {
+      nombre: 'Librería'
+    },
+    {
+      nombre: 'Alimentos y Bebidas'
+    },
+    {
+      nombre: 'Indumentaria'
+    },
+    {
+      nombre: 'Servicios'
+    }
+  ]
+
   constructor(private productService: ProductsService, private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
