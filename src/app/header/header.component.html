@@ -1,0 +1,209 @@
+<!-- HEADER -->
+<header>
+	<!-- TOP HEADER -->
+	<div id="top-header">
+		<div class="container">
+			<ul class="header-links pull-left">
+				<li><a href="#"><i class="fa fa-phone"></i> +54 3404503301</a></li>
+				<li><a href="#"><i class="fa fa-envelope-o"></i> contacto@tesysweb.com</a></li>
+				<li><a href="#"><i class="fa fa-map-marker"></i> Lisandro de la Torre 254</a></li>
+			</ul>
+			<ul class="header-links pull-right">
+				<li><a routerLink="/login"><i class="fa fa-user-o"></i> Mi Cuenta</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /TOP HEADER -->
+
+	<!-- MAIN HEADER -->
+	<div id="header">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- LOGO -->
+				<div class="col-md-2">
+					<div class="header-logo">
+						<a href="#" class="logo">
+							<img src="./assets//img/logo.png" alt="">
+						</a>
+					</div>
+				</div>
+				<!-- /LOGO -->
+
+				<!-- SEARCH BAR -->
+				<div class="col-md-7">
+					<div class="header-search">
+						<form>
+							<select class="input-select">
+								<option value="0">Todas las categorias</option>
+								<option value="1" *ngFor="let g of categories">{{g.nombre}}</option>
+							</select>
+							<input class="input" placeholder="Buscar producto...">
+							<button class="search-btn">Buscar</button>
+						</form>
+					</div>
+				</div>
+				<!-- /SEARCH BAR -->
+
+				<!-- ACCOUNT -->
+				<div class="col-md-3 clearfix">
+					<div class="header-ctn">
+						<!-- Wishlist -->
+						<div>
+							<a href="#">
+								<i class="fa fa-heart-o"></i>
+								<span>Favoritos</span>
+								<div class="qty">0</div>
+							</a>
+						</div>
+						<!-- /Wishlist -->
+
+						<!-- Cart -->
+						<div class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								<i class="fa fa-shopping-cart"></i>
+								<span>Mi Carrito</span>
+								<div class="qty">{{cartData.data[0].numInCart!=0 ? cartData.data.length : 0}}</div>
+							</a>
+							<div class="cart-dropdown">
+								<div class="cart-list" *ngIf="cartData.data[0].numInCart!=0">
+									<div class="product-widget" *ngFor="let c of cartData.data; let i=index">
+										<div class="product-img">
+											<img [src]="c.product?.image" alt="{{c.product?.name}}" width="20px">
+										</div>
+										<div class="product-body">
+											<h3 class="product-name"><a href="#">{{c.product?.name}}</a></h3>
+											<h4 class="product-price"><span class="qty">{{c.numInCart}} x</span>{{
+												c.product?.price | currency: "ARS" }}</h4>
+										</div>
+										<button class="delete" (click)="cartService.DeleteProductFromCart(i)"><i
+												class="fa fa-close"></i></button>
+									</div>
+								</div>
+								<div class="cart-summary">
+									<small>{{cartData.data[0].numInCart!=0 ? cartData.data.length : 0}} Item(s)
+										cargados</small>
+									<h5>TOTAL: {{cartTotal | currency:'ARS'}}</h5>
+								</div>
+								<div class="cart-btns">
+									<a routerLink="/cart">Ver Carrito</a>
+									<a routerLink="/checkout">Finalizar <i class="fa fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+						</div>
+						<!-- /Cart -->
+					</div>
+				</div>
+				<!-- /ACCOUNT -->
+			</div>
+			<!-- row -->
+		</div>
+		<!-- container -->
+	</div>
+	<!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->
+
+<nav class="navbar navbar-expand-md navbar-light bg-light navbar-hover" style="  background: #FFF;
+border-bottom: 2px solid #E4E7ED;
+border-top: 3px solid #D10024;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHover" aria-controls="navbarDD" aria-expanded="false" aria-label="Navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="container">
+		<div class="collapse navbar-collapse" id="navbarHover">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Vender</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Categorias
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">Link</a></li>
+						<li><a class="dropdown-item" href="#">Link</a></li>
+						<li><a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Submenu link</a></li>
+								<li><a class="dropdown-item" href="#">Submenu link 2</a></li>
+								<li><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="#">Subsubmenu 1</a></li>
+										<li><a class="dropdown-item" href="#">Subsubmenu 2</a></li>
+									</ul>
+								</li>
+								<li><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu 2</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="#">Subsubmenu 2.1</a></li>
+										<li><a class="dropdown-item" href="#">Subsubmenu 2.2</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Submenu 2 link</a></li>
+								<li><a class="dropdown-item" href="#">Submenu 2 link 2</a></li>
+								<li><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu 2</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="#">Link</a></li>
+										<li><a class="dropdown-item" href="#">Link</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="container md-none">
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+			  <li class="nav-item active">
+				<a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+			  </li>
+			  <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Categorías
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<ul class="categories">
+						<li><a href="#">sass</a>
+							<ul>
+								<li><a href="#">less</a>
+								</li>
+								<li><a href="#">sass</a>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#">less</a>
+						</li>
+						
+					</ul>
+				  <a class="dropdown-item" href="#">Action</a>
+				  <a class="dropdown-item" href="#">Another action</a>
+				  <a class="dropdown-item" href="#">Something else here</a>
+				</div>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="#">Vender</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="#">Contacto</a>
+			  </li>
+			</ul>
+		  </div>
+	</div>
+  </nav>-->
