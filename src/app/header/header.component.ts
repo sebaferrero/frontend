@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CartModelServer } from '../models/cart.model';
 import * as $ from "jquery";
 import { CartService } from '../service/cart.service';
+import { CategoriesModelServer } from '../models/categories.models';
+import { CategoriesService } from '../service/categories.service';
 
 @Component({
   selector: 'app-header',
@@ -11,23 +13,8 @@ import { CartService } from '../service/cart.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
 
-  categories: any = [
-    {
-      nombre: 'Tecnología'
-    },
-    {
-      nombre: 'Librería'
-    },
-    {
-      nombre: 'Alimentos y Bebidas'
-    },
-    {
-      nombre: 'Indumentaria'
-    },
-    {
-      nombre: 'Servicios'
-    }
-  ]
+  categories: CategoriesModelServer[] = [];
+
 
   cartData: CartModelServer = {
     total: 0,
@@ -40,11 +27,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   };
   cartTotal: number = 0;
 
-  constructor(public cartService: CartService) { }
+  constructor(public cartService: CartService, public categoryService: CategoriesService) { }
   ngOnInit(): void {
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
-
     this.cartService.cartData$.subscribe(data => this.cartData = data);
+    this.categoryService.getAllCategories()
+    .subscribe((data:any) => {
+      this.categories = data;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -58,23 +48,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     $('.cart-dropdown').on('click', function (e) {
       e.stopPropagation();
     });
-    $(function() {
-      // ------------------------------------------------------- //
-      // Multi Level dropdowns
-      // ------------------------------------------------------ //
-      // $("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
-      //   event.preventDefault();
-      //   event.stopPropagation();
-      //   $(this).siblings().toggleClass("show");
-      //   if (!$(this).next().hasClass('show')) {
-      //     $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-      //   }
-      //   $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-      //     $('.dropdown-submenu .show').removeClass("show");
-      //   });
-      // });
-      ///////
-      
+    $(function() {    
       $("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
         event.preventDefault();
         event.stopPropagation();

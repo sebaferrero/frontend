@@ -37,7 +37,7 @@
 						<form>
 							<select class="input-select">
 								<option value="0">Todas las categorias</option>
-								<option value="1" *ngFor="let g of categories">{{g.nombre}}</option>
+								<option value="1" *ngFor="let cat of categories">{{cat.title}}</option>
 							</select>
 							<input class="input" placeholder="Buscar producto...">
 							<button class="search-btn">Buscar</button>
@@ -124,8 +124,9 @@ border-top: 3px solid #D10024;">
 					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Categorias
 					</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Link</a></li>
+					<ul class="dropdown-menu" *ngFor="let cat of categories">
+						<li><a class="dropdown-item" href="#">{{cat.title}}</a></li>
+						<!-- <li><a class="dropdown-item" href="#">Link</a></li>
 						<li><a class="dropdown-item" href="#">Link</a></li>
 						<li><a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
 							<ul class="dropdown-menu">
@@ -156,7 +157,7 @@ border-top: 3px solid #D10024;">
 									</ul>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 					</ul>
 				</li>
 			</ul>
